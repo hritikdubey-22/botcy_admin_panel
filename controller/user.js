@@ -52,8 +52,6 @@ const signUp = async (req, res) => {
             return res.send(apiResponse);
         }
 
-        // const user = new User(req.body);
-        // const result = await user.save();
         const result = {otp:123456}
         const apiResponse = response.generate(
             constants.SUCCESS,
@@ -73,6 +71,40 @@ const signUp = async (req, res) => {
         res.status(500).send(apiResponse);
     }
 };
+
+const forgotPassWord = async (req, res) => {
+    try {
+        const isUserExist = await User.findOne({ email: req.body.email });
+
+        if (!isUserExist) {
+            const apiResponse = response.generate(
+                constants.ERROR,
+                messages.USER.NOTEXIST,
+                constants.HTTP_SUCCESS
+            );
+            return res.send(apiResponse);
+        }
+
+        const result = { otp: 123456 }
+        const apiResponse = response.generate(
+            constants.SUCCESS,
+            messages.USER.GENERATED,
+            constants.HTTP_SUCCESS,
+            result
+        );
+        res.send(apiResponse);
+    } catch (error) {
+        console.error(error);
+        const apiResponse = response.generate(
+            constants.ERROR,
+            messages.USER.FAILURE,
+            constants.HTTP_SERVER_ERROR,
+            error
+        );
+        res.status(500).send(apiResponse);
+    }
+};
+
 
 const login = async (req, res) => {
     try {
@@ -113,7 +145,8 @@ const login = async (req, res) => {
 };
 
 module.exports = {
-    registration: registration,
-    login: login,
-    signUp: signUp
+    registration,
+    login,
+    signUp,
+    forgotPassWord
 };

@@ -6,6 +6,7 @@ const indexController = require("../controller/user");
 
 
 router.post('/signUp', indexController.signUp);
+router.post('/forgotPassWord', indexController.forgotPassWord);
 router.post('/registration', indexController.registration);
 router.post('/login', indexController.login);
 // router.post('/changeTheme', indexController.themeUI);
