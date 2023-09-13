@@ -5,19 +5,12 @@ const passwordUtil = require('../utils/password');
 const userSchema = mongoose.Schema({
     email: {
         type: String,
-        required: true
     },
     password: {
         type: String,
-        required: true
-    },
-    admin: {
-        type: Boolean,
-        default: false
     },
     clientName: {
         type: String,
-        required: true
     }
 });
 userSchema.pre('save', async function (next) {

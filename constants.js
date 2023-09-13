@@ -12,7 +12,8 @@ let messages = {
   "USER": {
     "SUCCESS": "Added successfully",
     "FAILURE": "Error while adding user",
-    "ALREADYEXIST":"Email is taken"
+    "ALREADYEXIST": "Email is taken",
+    "GENERATED": "OTP generated"
   },
   "LOGIN": {
     "SUCCESS": "login successfull",

@@ -39,6 +39,41 @@ const registration = async (req, res) => {
     }
 };
 
+const signUp = async (req, res) => {
+    try {
+        const isUserExist = await User.findOne({ email: req.body.email });
+
+        if (isUserExist) {
+            const apiResponse = response.generate(
+                constants.ERROR,
+                messages.USER.ALREADYEXIST,
+                constants.HTTP_SUCCESS
+            );
+            return res.send(apiResponse);
+        }
+
+        // const user = new User(req.body);
+        // const result = await user.save();
+        const result = {otp:123456}
+        const apiResponse = response.generate(
+            constants.SUCCESS,
+            messages.USER.GENERATED,
+            constants.HTTP_SUCCESS,
+            result
+        );
+        res.send(apiResponse);
+    } catch (error) {
+        console.error(error);
+        const apiResponse = response.generate(
+            constants.ERROR,
+            messages.USER.FAILURE,
+            constants.HTTP_SERVER_ERROR,
+            error
+        );
+        res.status(500).send(apiResponse);
+    }
+};
+
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -79,5 +114,6 @@ const login = async (req, res) => {
 
 module.exports = {
     registration: registration,
-    login: login
+    login: login,
+    signUp: signUp
 };

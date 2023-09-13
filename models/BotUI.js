@@ -31,13 +31,21 @@ const botUiSchema = mongoose.Schema({
         required: true
     },
     CatalogUI: {
-        type: Boolean,
+        type: String,
         default: false
     },
     CategoriesUI: {
         type: String,
         required: true
-    }
+    },
+    clientName: {
+        type: String,
+        default: false
+    },
+    email: {
+        type: String,
+        required: true
+    },
 });
 
 const BotUI = mongoose.model('BotUI', botUiSchema);
