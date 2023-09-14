@@ -47,10 +47,37 @@ const botUiSchema = mongoose.Schema({
     },
     CatalogUI: {
         categoryBackDrop: String,
+        youmayLike: {
+            imageBorderColor: {
+                type: String,
+            },
+            titleWeight: {
+                type: String,
+            },
+            titleColor: {
+                type: String,
+            },
+            priceWeight: {
+                type: String,
+            },
+            PriceColor: {
+                type: String,
+            }   
+        }
     },
     CategoriesUI: {
-        type: String,
-        default: false
+        quickReplyBorderRadius: String,
+        drawer: {
+            imageBorderColor: {
+                type: String,
+            },
+            titleWeight: {
+                type: String,
+            },
+            titleColor: {
+                type: String,
+            }
+        }
     },
     clientName: {
         type: String,
@@ -59,11 +86,7 @@ const botUiSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
-    email: {
-        type: String,
-        ref: "User"
-    },
+    }
 }, { versionKey: false, strict: false });
 
 const BotUI = mongoose.model('BotUI', botUiSchema);

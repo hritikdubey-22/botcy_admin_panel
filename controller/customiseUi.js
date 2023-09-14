@@ -18,7 +18,7 @@ const themeCustomization = async (req, res) => {
             );
             return res.send(apiResponse);
         }
-        const { path } = req.file;
+        const path = req?.file?.path ?? "";
         let link;
         let changedUI;
         if (path) {

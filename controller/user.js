@@ -17,7 +17,7 @@ const registration = async (req, res) => {
             );
             return res.send(apiResponse);
         }
-        const { path } = req.file;
+        const path = req?.file?.path ?? "";
         // const link = await uploadFileToCloudinary(path);
         let link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
 
@@ -30,6 +30,7 @@ const registration = async (req, res) => {
         }
         const result = await User.create(userObject);
         result._doc.token = passwordUtil.genJwtToken(result._id);
+        delete result._doc.password;
         const apiResponse = response.generate(
             constants.SUCCESS,
             messages.USER.SUCCESS,
@@ -126,7 +127,7 @@ const login = async (req, res) => {
                 token: passwordUtil.genJwtToken(user._id),
                 user: user,
             };
-
+            delete resData.user._doc.password;
             const apiResponse = response.generate(
                 constants.SUCCESS,
                 messages.LOGIN.SUCCESS,
