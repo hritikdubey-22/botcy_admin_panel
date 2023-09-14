@@ -1,55 +1,42 @@
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2;
-var fs = require("fs");
 
-
-// Configure Cloudinary with your API credentials
 cloudinary.config({
-    cloud_name: 'your_cloud_name',
-    api_key: 'your_api_key',
-    api_secret: 'your_api_secret'
+    cloud_name: 'dqbub4vtj',
+    api_key: '872533152418616',
+    api_secret: 'DDN-V8-KrKLBe_Bf7tYGR3u3Yn0'
 });
 
 
-async function uploadFileToCloudinary(fileBuffer, filename, folder = '') {
-    return new Promise((resolve, reject) => {
-        // Construct a unique public_id (optional) by combining folder and filename
-        const public_id = folder ? `${folder}/${filename}` : filename;
-
-        // Upload the file to Cloudinary
-        cloudinary.uploader.upload_stream(
-            {
-                resource_type: 'auto', // Automatically detect resource type
-                public_id: public_id // Unique public ID (optional)
-            },
-            (error, result) => {
-                if (error) {
-                    console.error(error);
-                    reject('Upload failed');
-                } else {
-                    // Return the uploaded URL
-                    resolve(result.secure_url);
-                }
-            }
-        ).end(fileBuffer);
-    });
+async function uploadFileToCloudinary(file) {
+    try {
+        const result = await cloudinary.uploader.upload(file, {
+            resource_type: 'auto',
+            flags: 'attachment'
+        });
+        return result.secure_url;
+    } catch (error) {
+        console.error('Cloudinary error:', error);
+        throw error;
+    }
 }
 
-let uploadMultipleFile = (fieldname, count) => (req, res, next) => {
-    upload.array(fieldname, count)(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            if (err.code == 'LIMIT_UNEXPECTED_FILE') {
-                return res.status(400).json({ error: "Too many files selected. Maximum allowed: 5." });
-            } else {
-                return res.status(400).json({ error: "error occure in multer" });
-            }
-        } else if (err) {
-            return res.status(400).json({ error: "unknown error occure!" });
-        }
-        next();
-    });
-}
+let storage = multer.diskStorage({
+    // destination: function (req, file, callback) {
+    //     console.log("file", file);
+    //  callback(null, "./Uploads/");
+    // },
+    filename: function (req, file, callback) {
+        callback(null, file.originalname);
+    }
+});
+let maxSize = 1000000 * 1000;
+let multerUpload = multer({
+    storage: storage,
+    limits: {
+        fileSize: maxSize
+    }
+});
+const single = multerUpload.single('image')
 
-const upload = multer({ storage: multer.memoryStorage() });
-
-module.exports = { upload, uploadMultipleFile };
+module.exports = { single, uploadFileToCloudinary };

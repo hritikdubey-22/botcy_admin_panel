@@ -9,8 +9,18 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
     },
+    name: {
+        type: String
+    },
+    profileImage: {
+        type: String
+    },
     clientName: {
         type: String,
+    },
+    cutomiseBotUiId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "BotUI"
     }
 });
 userSchema.pre('save', async function (next) {

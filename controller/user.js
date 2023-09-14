@@ -1,6 +1,7 @@
 const response = require('../lib/responseLib');
 const { constants, messages } = require("../constants.js");
 const passwordUtil = require("../utils/password");
+const { uploadFileToCloudinary } = require("../middleware/multer")
 
 const { User } = require('../models/user');
 
@@ -16,10 +17,19 @@ const registration = async (req, res) => {
             );
             return res.send(apiResponse);
         }
+        const { path } = req.file;
+        // const link = await uploadFileToCloudinary(path);
+        let link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
 
-        const user = new User(req.body);
-        const result = await user.save();
-
+        let userObject = {
+            email: req.body.email,
+            password: req.body.password,
+            name: req.body.name,
+            profileImage: link,
+            clientName: req.body.clientName
+        }
+        const result = await User.create(userObject);
+        result._doc.token = passwordUtil.genJwtToken(result._id);
         const apiResponse = response.generate(
             constants.SUCCESS,
             messages.USER.SUCCESS,
@@ -47,12 +57,12 @@ const signUp = async (req, res) => {
             const apiResponse = response.generate(
                 constants.ERROR,
                 messages.USER.ALREADYEXIST,
-                constants.HTTP_SUCCESS
+                constants.HTTP_ERROR
             );
             return res.send(apiResponse);
         }
 
-        const result = {otp:123456}
+        const result = { otp: 123456, email: req.body.email }
         const apiResponse = response.generate(
             constants.SUCCESS,
             messages.USER.GENERATED,

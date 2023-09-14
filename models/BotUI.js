@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
 const botUiSchema = mongoose.Schema({
-    primaryThemeUI: {
+    overallThemeUI: {
         theme: {
             type: String,
         },
         botIcons: {
             type: String,
         },
-        componentLayout: {
+        actionButtonBorder: {
             type: String,
         }
     },
@@ -23,30 +23,48 @@ const botUiSchema = mongoose.Schema({
             type: String,
         },
         greetingMessage: {
-            type: String,
+            isEmoji: {
+                type: Boolean,
+            },
+            emojiPlace: {
+                type: String,
+            }
         },
     },
     cartUI: {
-        type: String,
-        required: true
+        imageBorderColor: {
+            type: String,
+        },
+        titleWeight: {
+            type: String,
+        },
+        priceWeight: {
+            type: String,
+        },
+        PriceSize: {
+            type: String,
+        }
     },
     CatalogUI: {
-        type: String,
-        default: false
+        categoryBackDrop: String,
     },
     CategoriesUI: {
         type: String,
-        required: true
+        default: false
     },
     clientName: {
         type: String,
         default: false
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     email: {
         type: String,
-        required: true
+        ref: "User"
     },
-});
+}, { versionKey: false, strict: false });
 
 const BotUI = mongoose.model('BotUI', botUiSchema);
 module.exports = { BotUI }; 
