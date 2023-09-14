@@ -17,6 +17,11 @@ let messages = {
     "NOTEXIST": "Email not found",
     "GENERATED": "OTP generated"
   },
+  "BOTUI": {
+    "SUCCESS": "Added successfully",
+    "FETCHED":"Fetched successfully",
+    "FAILURE": "Error while customization",
+  },
   "LOGIN": {
     "SUCCESS": "login successfull",
     "FAILURE": "Username or password incorrect",
@@ -28,8 +33,12 @@ let messages = {
     "SUCCESS": "Route not found in the application"
   }
 }
+let json = {
+  "FAILURE": "Error parsing JSON:"
+}
 module.exports = {
   constants,
-  messages
+  messages,
+  json
 }
 

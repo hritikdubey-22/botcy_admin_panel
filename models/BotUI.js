@@ -41,9 +41,12 @@ const botUiSchema = mongoose.Schema({
         priceWeight: {
             type: String,
         },
-        PriceSize: {
+        priceSize: {
             type: String,
-        }
+        },
+        priceColor: {
+            type: String,
+        } 
     },
     CatalogUI: {
         categoryBackDrop: String,
@@ -60,7 +63,7 @@ const botUiSchema = mongoose.Schema({
             priceWeight: {
                 type: String,
             },
-            PriceColor: {
+            priceColor: {
                 type: String,
             }   
         }
@@ -81,11 +84,13 @@ const botUiSchema = mongoose.Schema({
     },
     clientName: {
         type: String,
-        default: false
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    userEmail: {
+        type: String,
     }
 }, { versionKey: false, strict: false });
 

@@ -51,14 +51,15 @@ const themeCustomization = async (req, res) => {
                     botIcons: link,
                     actionButtonBorder: changes.actionButtonBorder,
                 },
-                userId: isUserExist._id
+                userId: isUserExist._id,
+                userEmail: isUserExist.email
             }
             changedUI = await BotUI.create(saveToObject);
             await User.findByIdAndUpdate({ _id: isUserExist._id }, { cutomiseBotUiId: changedUI._id }, { new: true });
         }
         const apiResponse = response.generate(
             constants.SUCCESS,
-            messages.USER.SUCCESS,
+            messages.BOTUI.SUCCESS,
             constants.HTTP_SUCCESS,
             changedUI
         );
@@ -67,7 +68,7 @@ const themeCustomization = async (req, res) => {
         console.error(error);
         const apiResponse = response.generate(
             constants.ERROR,
-            messages.USER.FAILURE,
+            messages.BOTUI.FAILURE,
             constants.HTTP_SERVER_ERROR,
             error
         );
@@ -75,6 +76,29 @@ const themeCustomization = async (req, res) => {
     }
 };
 
+const getTheme = async (req, res) => {
+    try {
+        const userTheme = await BotUI.findOne({ userEmail: req.body.email }).lean();
+        const apiResponse = response.generate(
+            constants.SUCCESS,
+            messages.BOTUI.FETCHED,
+            constants.HTTP_SUCCESS,
+            userTheme
+        );
+        res.send(apiResponse);
+    } catch (error) {
+        console.error(error);
+        const apiResponse = response.generate(
+            constants.ERROR,
+            messages.BOTUI.FAILURE,
+            constants.HTTP_SERVER_ERROR,
+            error
+        );
+        res.status(500).send(apiResponse);
+    }
+}
+
 module.exports = {
-    themeCustomization
+    themeCustomization,
+    getTheme
 }
