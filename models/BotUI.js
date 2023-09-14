@@ -91,6 +91,10 @@ const botUiSchema = mongoose.Schema({
     },
     userEmail: {
         type: String,
+    },
+    isUpdated: {
+        type: Boolean,
+        default:false
     }
 }, { versionKey: false, strict: false });
 

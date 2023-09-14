@@ -29,19 +29,19 @@ const themeCustomization = async (req, res) => {
         if (isUserExist.cutomiseBotUiId) {
             if (req.body.sectionChanged == "overallThemeUI") {
                 changes.botIcons = link;
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { overallThemeUI: changes }, { new: true });
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { overallThemeUI: changes, isUpdated :true }, { new: true });
             }
             else if (req.body.sectionChanged == "conversationUI") {
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { conversationUI: changes }, { new: true });
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { conversationUI: changes, isUpdated: true }, { new: true });
             }
             else if (req.body.sectionChanged == "cartUI") {
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { cartUI: changes }, { new: true });
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { cartUI: changes, isUpdated: true }, { new: true });
             }
             else if (req.body.sectionChanged == "CatalogUI") {
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { CatalogUI: changes }, { new: true });
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { CatalogUI: changes, isUpdated: true }, { new: true });
             }
             else if (req.body.sectionChanged == "CategoriesUI") {
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { CategoriesUI: changes }, { new: true });
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { CategoriesUI: changes, isUpdated: true }, { new: true });
             }
         }
         else {
@@ -52,7 +52,8 @@ const themeCustomization = async (req, res) => {
                     actionButtonBorder: changes.actionButtonBorder,
                 },
                 userId: isUserExist._id,
-                userEmail: isUserExist.email
+                userEmail: isUserExist.email,
+                isUpdated: true
             }
             changedUI = await BotUI.create(saveToObject);
             await User.findByIdAndUpdate({ _id: isUserExist._id }, { cutomiseBotUiId: changedUI._id }, { new: true });
