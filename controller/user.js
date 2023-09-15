@@ -18,8 +18,8 @@ const registration = async (req, res) => {
             return res.send(apiResponse);
         }
         const path = req?.file?.path ?? "";
-        // const link = await uploadFileToCloudinary(path);
-        let link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
+        const link = await uploadFileToCloudinary(path);
+        // let link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
 
         let userObject = {
             email: req.body.email,

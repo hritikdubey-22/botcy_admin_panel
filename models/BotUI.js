@@ -129,6 +129,9 @@ const botUiSchema = mongoose.Schema({
     isUpdated: {
         type: Boolean,
         default: false
+    },
+    clientName: {
+        type: String
     }
 }, { versionKey: false, strict: false });
 

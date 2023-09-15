@@ -22,8 +22,8 @@ const themeCustomization = async (req, res) => {
         let link;
         let changedUI;
         if (path) {
-            // link = await uploadFileToCloudinary(path);
-            link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
+            link = await uploadFileToCloudinary(path);
+            // link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
             console.log(link)
         }
         if (isUserExist.cutomiseBotUiId) {
