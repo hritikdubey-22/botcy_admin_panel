@@ -79,7 +79,9 @@ const themeCustomization = async (req, res) => {
 
 const getTheme = async (req, res) => {
     try {
-        const userTheme = await BotUI.findOne({ userEmail: req.body.email }).lean();
+        let email = req.body.email ?? " "
+        let clientName = req.body.clientName ?? " "
+        const userTheme = await BotUI.findOne({ $or: [{ userEmail: email }, { clientName: clientName }] }).lean();
         const apiResponse = response.generate(
             constants.SUCCESS,
             messages.BOTUI.FETCHED,

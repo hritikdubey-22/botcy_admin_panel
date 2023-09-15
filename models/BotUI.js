@@ -66,7 +66,11 @@ const botUiSchema = mongoose.Schema({
         priceColor: {
             type: String,
             default: "#000000"
-        }
+        },
+        quantityWeight: {
+            type: String,
+            default: "500"
+        },
     },
     CatalogUI: {
         categoryBackDrop: {
