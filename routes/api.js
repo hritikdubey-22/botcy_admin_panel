@@ -12,7 +12,7 @@ router.post('/forgotPassWord', indexController.forgotPassWord);
 router.post('/registration', single, indexController.registration);
 router.post('/login', indexController.login);
 router.post('/changeTheme', verifyJwtToken, single, themeUI.themeCustomization);
-router.get('/getTheme', verifyJwtToken, themeUI.getTheme);
+router.post('/getTheme', verifyJwtToken, themeUI.getTheme);
 
 
 
