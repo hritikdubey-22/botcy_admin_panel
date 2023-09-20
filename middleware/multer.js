@@ -11,15 +11,16 @@ cloudinary.config({
 async function uploadFileToCloudinary(file) {
     try {
         const result = await cloudinary.uploader.upload(file, {
-            resource_type: 'auto',
-            flags: 'attachment'
+            resource_type: 'auto'
         });
-        return result.secure_url;
+        const url = `${result.secure_url}?response-content-disposition=inline`;
+        return url;
     } catch (error) {
         console.error('Cloudinary error:', error);
         throw error;
     }
 }
+
 
 let storage = multer.diskStorage({
     // destination: function (req, file, callback) {
