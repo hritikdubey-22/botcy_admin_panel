@@ -23,13 +23,17 @@ const themeCustomization = async (req, res) => {
         let changedUI;
         if (path) {
             link = await uploadFileToCloudinary(path);
-            // link = "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png";
             console.log(link)
         }
         if (isUserExist.cutomiseBotUiId) {
             if (req.body.sectionChanged == "overallThemeUI") {
-                changes.botIcons = link;
-                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { overallThemeUI: changes, isUpdated :true }, { new: true });
+                const existingUI = await BotUI.findById(isUserExist.cutomiseBotUiId).lean();
+                let toUpdateObject = {
+                    theme: changes.theme ?? existingUI.overallThemeUI.theme,
+                    actionButtonBorder: changes.actionButtonBorder ?? existingUI.overallThemeUI.actionButtonBorder,
+                    botIcons: link ?? existingUI.overallThemeUI.botIcons
+                }
+                changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { overallThemeUI: toUpdateObject, isUpdated :true }, { new: true });
             }
             else if (req.body.sectionChanged == "conversationUI") {
                 changedUI = await BotUI.findByIdAndUpdate({ _id: isUserExist.cutomiseBotUiId }, { conversationUI: changes, isUpdated: true }, { new: true });

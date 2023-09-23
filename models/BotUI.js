@@ -17,7 +17,6 @@ const botUiSchema = mongoose.Schema({
         ],
         botIcons: {
             type: String,
-            default: "https://res.cloudinary.com/dqbub4vtj/image/upload/v1694672707/cqzu9muq7nesfcylx3w3.png"
         },
         actionButtonBorder: {
             type: String,
