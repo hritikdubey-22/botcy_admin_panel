@@ -3,6 +3,7 @@ const { constants, messages } = require("../constants.js");
 const { User } = require('../models/user');
 const { BotUI } = require('../models/BotUI');
 const { uploadFileToCloudinary } = require("../middleware/multer")
+const axios = require('axios');
 
 
 const themeCustomization = async (req, res) => {
@@ -68,6 +69,11 @@ const themeCustomization = async (req, res) => {
             constants.HTTP_SUCCESS,
             changedUI
         );
+        await axios({
+            method: 'post',
+            url: "https://directline-aq8o.onrender.com/polyline/updatedUI",
+            data: {}
+        });
         res.send(apiResponse);
     } catch (error) {
         console.error(error);
