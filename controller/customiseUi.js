@@ -71,7 +71,7 @@ const themeCustomization = async (req, res) => {
         );
         await axios({
             method: 'post',
-            url: "https://directline-aq8o.onrender.com/polyline/updatedUI",
+            url: "https://ecommerce-direct-line.gloryautotech.com/polyline/updatedUI",
             data: {}
         });
         res.send(apiResponse);
